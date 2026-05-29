@@ -1,0 +1,69 @@
+<div class="border-slate-200 w-260">
+    <div class="flex items-center justify-between border-b border-slate-200 bg-slate-900 px-6 py-4">
+        <h2 class="text-lg font-semibold text-white">empleados</h2>
+
+        <button type="button" (click)="refreshRequested.emit()"
+            class="inset-ring-2 px-4 py-2 text-sm font-mono cursor-pointer text-amber-50">
+            Refrescar
+        </button>
+    </div>
+
+    <div class="w-auto overflow-x-auto">
+        <table class="w-auto table-auto text-sm">
+            <thead class="text-left text-slate-600">
+                <tr>
+                    <th class="px-1 py-1 font-semibold">ID</th>
+                    <th class="px-4 py-3 font-semibold">Nombre completo</th>
+                    <th class="px-4 py-3 font-semibold">Email</th>
+                    <th class="px-4 py-3 font-semibold w-35">Fecha ingreso</th>
+                    <th class="px-4 py-3 font-semibold">Departamento</th>
+                    <th class="px-4 py-3 font-semibold">Área</th>
+                    <th class="px-4 py-3 font-semibold">Actualización</th>
+                    <th class="px-4 py-3 font-semibold">Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @for (employee of employees; track employee.id) {
+                <tr class="border-t">
+                    <td class="px-4 py-3 align-top">{{ employee.id }}</td>
+
+                    <td class="px-4 py-3 align-top">
+                        <div class="font-medium text-slate-800">{{ employee.firstName }} {{ employee.lastName }}</div>
+                    </td>
+
+                    <td class="px-4 py-3 align-top">{{ employee.email }}</td>
+
+                    <td class="px-4 py-3 align-top">{{ employee.hireDate | date:'yyyy-MM-dd' }}</td>
+
+                    <td class="px-4 py-3 align-top"><span
+                            class="inline-flex rounded-full px-3 py-1 text-xs font-medium">{{
+                            employee.department?.name}}</span>
+                    </td>
+
+                    <td class="px-4 py-3 align-top"><span
+                            class="inline-flex rounded-full px-3 py-1 text-xs font-medium">{{
+                            employee.area?.name}}</span>
+                    </td>
+
+                    <td class="px-4 py-3 align-top">{{ employee.updatedAt | date:'yyyy-MM-dd HH:mm' }}</td>
+
+                    <td class="px-4 py-3 align-top">
+                        <div class="flex flex-wrap gap-2">
+                            <button type="button" (click)="editRequested.emit(employee)"
+                                class="px-1 py-1 inset-ring-2 text-sm font-mono text-black cursor-pointer bg-yellow-300">
+                                Editar
+                            </button>
+
+                            <button type="button" (click)="deleteRequested.emit(employee.id)"
+                                class="px-1 py-1 inset-ring-2 text-sm font-mono text-black cursor-pointer bg-orange-600">
+                                Eliminar
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

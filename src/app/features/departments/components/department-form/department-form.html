@@ -1,0 +1,33 @@
+<div class="rounded-2x1 p-10 shadow-sm">
+    <h2 class="mb-4 text-xl font-semibold text-slate-800">Crear departamento</h2>
+
+    <form [formGroup]="departmentForm" (ngSubmit)="submit()" class="space-y-4">
+        <div>
+            <label class="mb-1 block text-sm font-medium text-slate-700">Nombre del departamento</label>
+            <input type="text" formControlName="name" class="w-full rounded-lg border px-3 py-2"
+                [class.border-red-500]="f.name.touched && f.name.invalid"
+                [class.border-slate-300]="!(f.name.touched && f.name.invalid)" />
+
+            @if (f.name.touched && f.name.errors?.['required']) {
+            <p class="mt-1 text-sm text-red-600">El nombre es obligatorio.</p>
+            }
+
+            @if (f.name.touched && f.name.errors?.['maxlength']) {
+            <p class="mt-1 text-sm text-red-600">Máximo 100 caracteres.</p>
+            }
+        </div>
+
+        @if (errorMessage) {
+        <p class="text-sm text-red-600">{{ errorMessage }}</p>
+        }
+
+        @if (successMessage) {
+        <p class="text-sm text-green-600">{{ successMessage }}</p>
+        }
+
+        <button type="submit" [disabled]="isSubmitting"
+            class="inset-ring-2 px-4 py-2 text-sm font-mono cursor-pointer">
+            Guardar
+        </button>
+    </form>
+</div>

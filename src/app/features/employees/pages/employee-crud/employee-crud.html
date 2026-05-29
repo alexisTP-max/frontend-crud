@@ -1,0 +1,25 @@
+<div class="min-h-screen bg-slate-100 p-4 md:p-6">
+    <div class="mx-auto max-w-7xl py-1">
+        <div class="mb-6">
+            <h1 class="text-4xl font-bold text-slate-900">CRUD</h1>
+        </div>
+
+        <div class="grid grid-cols-1 gap-6 xl:grid-cols-[380px_minmax(0,1fr)]">
+            <div class="">
+                <app-department-form (departmentSaved)="onDepartmentSaved()"></app-department-form>
+
+                <app-area-form [departments]="departments" (areaSaved)="onAreaSaved()"></app-area-form>
+
+                <app-employee-form [departments]="departments" [selectedEmployee]="selectedEmployee"
+                    (employeeSaved)="onEmployeeSaved()" (formCleared)="onFormCleared()"></app-employee-form>
+            </div>
+
+            <div class="">
+                <app-employee-table [employees]="employees" [isLoading]="isLoadingEmployees"
+                    [firstLoadDone]="firstLoadDone" (editRequested)="onEditEmployee($event)"
+                    (deleteRequested)="onDeleteEmployee($event)"
+                    (refreshRequested)="loadEmployees()"></app-employee-table>
+            </div>
+        </div>
+    </div>
+</div>

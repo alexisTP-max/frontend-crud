@@ -1,0 +1,100 @@
+<div class="rounded-2x1 p-10 shadow-sm">
+    <h2 class="mb-6 text-2xl font-bold text-slate-800">
+        {{ selectedEmployee ? 'Editar empleado' : 'Crear empleado' }}
+    </h2>
+
+    <form [formGroup]="employeeForm" (ngSubmit)="submit()" class="space-y-4">
+        <div>
+            <label class="mb-1 block text-sm font-medium text-slate-700">Nombre</label>
+            <input type="text" formControlName="firstName" class="w-full rounded-lg border px-3 py-2"
+                [class.border-red-500]="f.firstName.touched && f.firstName.invalid"
+                [class.border-slate-300]="!(f.firstName.touched && f.firstName.invalid)" />
+            @if (f.firstName.touched && f.firstName.errors?.['required']) {
+            <p class="mt-1 text-sm text-red-600">El nombre es obligatorio.</p>
+            }
+        </div>
+
+        <div>
+            <label class="mb-1 block text-sm font-medium text-slate-700">Apellido</label>
+            <input type="text" formControlName="lastName" class="w-full rounded-lg border px-3 py-2"
+                [class.border-red-500]="f.lastName.touched && f.lastName.invalid"
+                [class.border-slate-300]="!(f.lastName.touched && f.lastName.invalid)" />
+            @if (f.lastName.touched && f.lastName.errors?.['required']) {
+            <p class="mt-1 text-sm text-red-600">El apellido es obligatorio.</p>
+            }
+        </div>
+
+        <div>
+            <label class="mb-1 block text-sm font-medium text-slate-700">Correo electrónico</label>
+            <input type="email" formControlName="email" class="w-full rounded-lg border px-3 py-2"
+                [class.border-red-500]="f.email.touched && f.email.invalid"
+                [class.border-slate-300]="!(f.email.touched && f.email.invalid)" />
+            @if (f.email.touched && f.email.errors?.['required']) {
+            <p class="mt-1 text-sm text-red-600">El correo es obligatorio.</p>
+            }
+            @if (f.email.touched && f.email.errors?.['email']) {
+            <p class="mt-1 text-sm text-red-600">El correo no tiene un formato válido.</p>
+            }
+        </div>
+
+        <div>
+            <label class="mb-1 block text-sm font-medium text-slate-700">Fecha de contratación</label>
+            <input type="date" formControlName="hireDate" class="w-full rounded-lg border px-3 py-2"
+                [class.border-red-500]="f.hireDate.touched && f.hireDate.invalid"
+                [class.border-slate-300]="!(f.hireDate.touched && f.hireDate.invalid)" />
+            @if (f.hireDate.touched && f.hireDate.errors?.['required']) {
+            <p class="mt-1 text-sm text-red-600">La fecha de contratación es obligatoria.</p>
+            }
+        </div>
+
+        <div>
+            <label class="mb-1 block text-sm font-medium text-slate-700">Departamento</label>
+            <select formControlName="departmentId" (change)="onDepartmentChange()"
+                class="w-full rounded-lg border px-3 py-2"
+                [class.border-red-500]="f.departmentId.touched && f.departmentId.invalid"
+                [class.border-slate-300]="!(f.departmentId.touched && f.departmentId.invalid)">
+                <option [value]="0">Seleccione un departamento</option>
+                @for (department of departments; track department.id) {
+                <option [value]="department.id">{{ department.name }}</option>
+                }
+            </select>
+            @if (f.departmentId.touched && f.departmentId.errors?.['min']) {
+            <p class="mt-1 text-sm text-red-600">Debe seleccionar un departamento.</p>
+            }
+        </div>
+
+        <div>
+            <label class="mb-1 block text-sm font-medium text-slate-700">Área</label>
+            <select formControlName="areaId" class="w-full rounded-lg border px-3 py-2"
+                [class.border-red-500]="f.areaId.touched && f.areaId.invalid"
+                [class.border-slate-300]="!(f.areaId.touched && f.areaId.invalid)">
+                <option [value]="0">Seleccione un área</option>
+                @for (area of areas; track area.id) {
+                <option [value]="area.id">{{ area.name }}</option>
+                }
+            </select>
+            @if (f.areaId.touched && f.areaId.errors?.['min']) {
+            <p class="mt-1 text-sm text-red-600">Debe seleccionar un área.</p>
+            }
+        </div>
+
+        @if (errorMessage) {
+        <p class="text-sm text-red-600">{{ errorMessage }}</p>
+        }
+
+        @if (successMessage) {
+        <p class="text-sm text-green-600">{{ successMessage }}</p>
+        }
+
+        <div class="flex gap-3 pt-2">
+            <button type="submit" [disabled]="isSubmitting"
+                class="inset-ring-2 px-4 py-2 text-sm font-mono cursor-pointer">
+                Guardar
+            </button>
+
+            <button type="button" (click)="clearForm()" class="inset-ring-2 px-4 py-2 text-sm font-mono cursor-pointer">
+                Limpiar
+            </button>
+        </div>
+    </form>
+</div>
